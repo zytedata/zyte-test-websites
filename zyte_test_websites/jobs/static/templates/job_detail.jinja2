@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{{ job.title }} Job</title>
+    </head>
+    <body>
+        <h1>{{ job.title }}</h1>
+        <p>
+            <b>Category:</b>
+            <span><a href="{{ job.category.url }}">{{ job.category.name }}</a></span>
+        </p>
+    </body>
+</html>

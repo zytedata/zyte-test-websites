@@ -1,0 +1,53 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Management"
+    },
+    {
+      "id": 2,
+      "name": "Installation & Maintenance"
+    },
+    {
+      "id": 3,
+      "name": "Construction"
+    }
+  ],
+  "jobs": [
+    {
+      "id": 1,
+      "category_id": 1,
+      "title": "Head of Strategic Projects"
+    },
+    {
+      "id": 2,
+      "category_id": 1,
+      "title": "Head of Customer Relationship & Operations"
+    },
+    {
+      "id": 3,
+      "category_id": 2,
+      "title": "Plumber"
+    },
+    {
+      "id": 4,
+      "category_id": 2,
+      "title": "Industrial Mechanic"
+    },
+    {
+      "id": 5,
+      "category_id": 2,
+      "title": "Wheel Repair Technician"
+    },
+    {
+      "id": 6,
+      "category_id": 3,
+      "title": "Bricklayer"
+    },
+    {
+      "id": 7,
+      "category_id": 3,
+      "title": "Steel Fixer"
+    }
+  ]
+}

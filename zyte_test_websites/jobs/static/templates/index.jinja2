@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Job website</title>
+    </head>
+    <body>
+        <h1>Job categories:</h1>
+        {# TODO: pagination  #}
+        <ol id="categories">
+            {% for cat in categories %}
+                <li class="category-li">
+                    <a href="{{ cat.url }}">{{ cat.name }}</a>
+                </li>
+            {% endfor %}
+        </ol>
+    </body>
+</html>
