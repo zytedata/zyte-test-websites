@@ -5,7 +5,6 @@
     </head>
     <body>
         <h1>{{ total_categories }} job categories:</h1>
-        {# TODO: pagination  #}
         <ol id="categories">
             {% for cat in categories %}
                 <li class="category-li">
@@ -13,5 +12,6 @@
                 </li>
             {% endfor %}
         </ol>
+        {% include "pagination.jinja2" %}
     </body>
 </html>

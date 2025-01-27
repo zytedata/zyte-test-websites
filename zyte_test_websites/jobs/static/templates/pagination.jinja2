@@ -1,0 +1,23 @@
+<div class="pagination">
+    {% if current_page > 1 %}
+        <a href="{{ base_url }}?page={{ current_page - 1 }}" class="prev">← Previous</a>
+    {% else %}
+        <span class="disabled">← Previous</span>
+    {% endif %}
+    <ul class="pages">
+        {% for page in range(1, total_pages + 1) %}
+            {% if page == current_page %}
+                <li class="active">{{ page }}</li>
+            {% else %}
+                <li>
+                    <a href="{{ base_url }}?page={{ page }}">{{ page }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% if current_page < total_pages %}
+        <a href="{{ base_url }}?page={{ current_page + 1 }}" class="next">Next →</a>
+    {% else %}
+        <span class="disabled">Next →</span>
+    {% endif %}
+</div>
