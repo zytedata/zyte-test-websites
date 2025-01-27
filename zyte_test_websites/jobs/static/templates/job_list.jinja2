@@ -4,12 +4,17 @@
         <title>Jobs in {{ category.name }}</title>
     </head>
     <body>
-        <h1>Jobs in {{ category.name }}:</h1>
+        <h1>{{ total_jobs }} jobs in {{ category.name }}:</h1>
         {# TODO: pagination  #}
         <ol id="jobs">
             {% for job in jobs %}
                 <li class="job-li">
-                    <a href="{{ job.url }}">{{ job.title }}</a>
+                    <h2 class="job-title">
+                        <a class="job-link" href="{{ job.url }}">{{ job.title }}</a>
+                    </h2>
+                    <p>Company: {{ job.company_name }}</p>
+                    <p>Location: {{ job.location }}</p>
+                    <p>Salary: {{ job.salary }}</p>
                 </li>
             {% endfor %}
         </ol>

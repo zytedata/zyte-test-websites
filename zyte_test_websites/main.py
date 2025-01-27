@@ -4,7 +4,7 @@ from pathlib import Path
 from aiohttp import web
 
 if __name__ == "__main__":
-    # TODO: make "jobs" not hardcoded
+    # TODO: when we have >1 website we should make "jobs" not hardcoded
 
     if len(sys.argv) != 3:
         print(f"Usage: {sys.argv[0]} jobs <port>")

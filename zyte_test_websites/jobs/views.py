@@ -16,10 +16,10 @@ routes = web.RouteTableDef()
 async def index(request: web.Request) -> dict[str, Any]:
     """Home page with a list of categories."""
     # TODO: pagination
+    categories = request.app[JobsDataKey].categories
     return {
-        "categories": sorted(
-            request.app[JobsDataKey].categories.values(), key=operator.attrgetter("id")
-        )
+        "categories": sorted(categories.values(), key=operator.attrgetter("id")),
+        "total_categories": len(categories),
     }
 
 
@@ -34,6 +34,7 @@ async def job_list(request: web.Request) -> dict[str, Any]:
     return {
         "category": category,
         "jobs": category.jobs.values(),
+        "total_jobs": len(category.jobs),
     }
 
 

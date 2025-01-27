@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -24,6 +25,17 @@ def load_data(data_path: Path) -> JobsAppData:
         job = Job(
             id=job_dict["id"],
             title=job_dict["title"],
+            date_published=datetime.fromisoformat(job_dict["date_published"]),
+            description=job_dict["description"],
+            salary=job_dict["salary"],
+            experience=job_dict["experience"],
+            work_type=job_dict["work_type"],
+            contact_name=job_dict["contact_name"],
+            contact_phone=job_dict["contact_phone"],
+            benefits=job_dict["benefits"],
+            responsibilities=job_dict["responsibilities"],
+            company_name=job_dict["company_name"],
+            location=job_dict["location"],
             category=category,
         )
         jobs[job_dict["id"]] = job

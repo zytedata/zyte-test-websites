@@ -5,9 +5,36 @@
     </head>
     <body>
         <h1>{{ job.title }}</h1>
+        <p class="job-date">Published on {{ job.date_published.strftime("%b %d, %Y") }}</p>
         <p>
-            <b>Category:</b>
-            <span><a href="{{ job.category.url }}">{{ job.category.name }}</a></span>
+            <span class="job-category"><a class="job-category-link" href="{{ job.category.url }}">{{ job.category.name }}</a></span>
+            ·
+            <span class="job-company">{{ job.company_name }}</span>
+            ·
+            <span class="job-work-type">{{ job.work_type }}</span>
+            ·
+            <span class="job-location">{{ job.location }}</span>
+        </p>
+        <p class="job-descr">{{ job.description }}</p>
+        <p class="job-experience">
+            <b>Required experience:</b> {{ job.experience }}
+        </p>
+        <p class="job-salary">
+            <b>Salary range:</b> {{ job.salary }}
+        </p>
+        <p class="job-responsibilities">
+            <b>Responsibilities:</b> {{ job.responsibilities }}
+        </p>
+        <div class="job-benefits">
+            <b>Benefits:</b>
+            <ul>
+                {% for benefit in job.benefits %}<li>{{ benefit }}</li>{% endfor %}
+            </ul>
+        </div>
+        <p>
+            <b>Contact:</b>
+            <span class="job-contact-name">{{ job.contact_name }}</span>
+            (<span class="job-contact-phone">{{ job.contact_phone }}</span>)
         </p>
     </body>
 </html>
