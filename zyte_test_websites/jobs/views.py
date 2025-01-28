@@ -20,7 +20,14 @@ JOBS_PER_PAGE = 10
 async def index(request: web.Request) -> dict[str, Any]:
     """Home page with a list of categories."""
     categories = request.app[JobsDataKey].categories
-    page = int(request.query.get("page", 1))
+
+    try:
+        page = int(request.query.get("page", 1))
+    except ValueError:
+        raise web.HTTPNotFound
+    if page > 1 and page * CATS_PER_PAGE > len(categories):
+        raise web.HTTPNotFound
+
     return {
         "categories": sorted(categories.values(), key=operator.attrgetter("id"))[
             CATS_PER_PAGE * (page - 1) : CATS_PER_PAGE * page
@@ -36,10 +43,21 @@ async def index(request: web.Request) -> dict[str, Any]:
 @aiohttp_jinja2.template("job_list.jinja2")
 async def job_list(request: web.Request) -> dict[str, Any]:
     """A page with a list of job postings"""
-    category = request.app[JobsDataKey].categories[
-        int(request.match_info["category_id"])
-    ]
-    page = int(request.query.get("page", 1))
+    try:
+        category_id = int(request.match_info["category_id"])
+    except ValueError:
+        raise web.HTTPNotFound
+    category = request.app[JobsDataKey].categories.get(category_id)
+    if not category:
+        raise web.HTTPNotFound
+
+    try:
+        page = int(request.query.get("page", 1))
+    except ValueError:
+        raise web.HTTPNotFound
+    if page > 1 and page * JOBS_PER_PAGE > len(category.jobs):
+        raise web.HTTPNotFound
+
     return {
         "category": category,
         "jobs": sorted(
@@ -58,4 +76,12 @@ async def job_list(request: web.Request) -> dict[str, Any]:
 @aiohttp_jinja2.template("job_detail.jinja2")
 async def job_detail(request: web.Request) -> dict[str, Any]:
     """A job posting page"""
-    return {"job": request.app[JobsDataKey].jobs[int(request.match_info["job_id"])]}
+    try:
+        job_id = int(request.match_info["job_id"])
+    except ValueError:
+        raise web.HTTPNotFound
+    job = request.app[JobsDataKey].jobs.get(job_id)
+    if not job:
+        raise web.HTTPNotFound
+
+    return {"job": job}

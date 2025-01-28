@@ -96,6 +96,8 @@ extend-select = [
     "YTT",
 ]
 ignore = [
+    # Within an `except` clause, raise exceptions with `raise ... from`
+    "B904",
     # Missing docstring in public module
     "D100",
     # Missing docstring in public class
