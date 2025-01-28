@@ -14,7 +14,7 @@ zyte-test-websites
    :target: https://github.com/zytedata/zyte-test-websites/actions
    :alt: Build Status
 
-.. image:: https://codecov.io/github/zytedata/duplicate-url-discarder/coverage.svg?branch=master
+.. image:: https://codecov.io/github/zytedata/zyte-test-websites/coverage.svg?branch=master
    :target: https://codecov.io/gh/zytedata/zyte-test-websites
    :alt: Coverage report
 
