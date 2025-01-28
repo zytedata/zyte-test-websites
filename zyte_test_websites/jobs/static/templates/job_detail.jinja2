@@ -1,40 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ job.title }} Job</title>
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+              crossorigin="anonymous">
     </head>
     <body>
-        <h1>{{ job.title }}</h1>
-        <p class="job-date">Published on {{ job.date_published.strftime("%b %d, %Y") }}</p>
-        <p>
-            <span class="job-category"><a class="job-category-link" href="{{ job.category.url }}">{{ job.category.name }}</a></span>
-            ·
-            <span class="job-company">{{ job.company_name }}</span>
-            ·
-            <span class="job-work-type">{{ job.work_type }}</span>
-            ·
-            <span class="job-location">{{ job.location }}</span>
-        </p>
-        <p class="job-descr">{{ job.description }}</p>
-        <p class="job-experience">
-            <b>Required experience:</b> {{ job.experience }}
-        </p>
-        <p class="job-salary">
-            <b>Salary range:</b> {{ job.salary }}
-        </p>
-        <p class="job-responsibilities">
-            <b>Responsibilities:</b> {{ job.responsibilities }}
-        </p>
-        <div class="job-benefits">
-            <b>Benefits:</b>
-            <ul>
-                {% for benefit in job.benefits %}<li>{{ benefit }}</li>{% endfor %}
-            </ul>
-        </div>
-        <p>
-            <b>Contact:</b>
-            <span class="job-contact-name">{{ job.contact_name }}</span>
-            (<span class="job-contact-phone">{{ job.contact_phone }}</span>)
-        </p>
+        <main class="container">
+            <h1>{{ job.title }}</h1>
+            <p class="job-date">Published on {{ job.date_published.strftime("%b %d, %Y") }}</p>
+            <h6>
+                <span class="job-category"><a class="job-category-link" href="{{ job.category.url }}">{{ job.category.name }}</a></span>
+                ·
+                <span class="job-company">{{ job.company_name }}</span>
+                ·
+                <span class="job-work-type">{{ job.work_type }}</span>
+                ·
+                <span class="job-location">{{ job.location }}</span>
+            </h6>
+            <dl class="row">
+                <dt class="col-sm-2">Job description</dt>
+                <dd class="col-sm-10">
+                    {{ job.description }}
+                </dd>
+                <dt class="col-sm-2">Required experience</dt>
+                <dd class="col-sm-10">
+                    {{ job.experience }}
+                </dd>
+                <dt class="col-sm-2">Salary range</dt>
+                <dd class="col-sm-10">
+                    {{ job.salary }}
+                </dd>
+                <dt class="col-sm-2">Responsibilities</dt>
+                <dd class="col-sm-10">
+                    {{ job.responsibilities }}
+                </dd>
+                <dt class="col-sm-2">Benefits</dt>
+                <dd class="col-sm-10">
+                    <ul>
+                        {% for benefit in job.benefits %}<li>{{ benefit }}</li>{% endfor %}
+                    </ul>
+                </dd>
+                <dt class="col-sm-2">Contact</dt>
+                <dd class="col-sm-10">
+                    <span>{{ job.contact_name }}</span>
+                    (<span class="phone">{{ job.contact_phone }}</span>)
+                </dd>
+            </dl>
+        </main>
     </body>
 </html>
