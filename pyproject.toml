@@ -9,6 +9,7 @@ authors = [{name = "Zyte Group Ltd", email = "info@zyte.com"}]
 readme = "README.rst"
 dependencies = [
     "aiohttp >= 3.9.0",
+    "aiohttp_jinja2 >= 1.6",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -95,6 +96,8 @@ extend-select = [
     "YTT",
 ]
 ignore = [
+    # Within an `except` clause, raise exceptions with `raise ... from`
+    "B904",
     # Missing docstring in public module
     "D100",
     # Missing docstring in public class
@@ -141,3 +144,7 @@ ignore = [
 
 [tool.ruff.lint.pydocstyle]
 convention = "pep257"
+
+[tool.djlint]
+profile="jinja"
+ignore="H030,H031"
