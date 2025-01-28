@@ -28,11 +28,19 @@ website.
 Job postings
 ------------
 
+Features:
+
+* A page with job categories with pagination.
+* Pages with jobs in a category with pagination.
+* Pages with single job details.
+
 Run it with:
 
-.. code-block:: sh
+.. code-block:: console
 
     $ python -m zyte_test_websites.main jobs 8888
+
+You can access it at http://localhost:8888.
 
 Requirements
 ============
