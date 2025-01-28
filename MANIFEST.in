@@ -1,0 +1,3 @@
+include zyte_test_websites/py.typed
+recursive-include zyte_test_websites/*/static *
+include zyte_test_websites/*/data.json

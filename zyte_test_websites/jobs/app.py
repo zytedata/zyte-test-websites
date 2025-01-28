@@ -2,8 +2,7 @@ from __future__ import annotations
 
 import json
 from datetime import datetime
-from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import aiohttp_jinja2
 import jinja2
@@ -11,6 +10,9 @@ from aiohttp import web
 
 from .items import Job, JobCategory, JobsAppData, JobsDataKey
 from .views import routes
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 def load_data(data_path: Path) -> JobsAppData:
@@ -50,6 +52,6 @@ def make_app(data_path: Path) -> web.Application:
     app.add_routes(routes)
     aiohttp_jinja2.setup(
         app,
-        loader=jinja2.FileSystemLoader(Path(__file__).parent / "static" / "templates"),
+        loader=jinja2.PackageLoader("zyte_test_websites.jobs", "static/templates"),
     )
     return app
