@@ -25,6 +25,15 @@ zyte-test-websites contains websites that can be used by spiders to test
 scraping of websites of a specific kind. It currently contains a job postings
 website.
 
+Job postings
+------------
+
+Run it with:
+
+.. code-block:: sh
+
+    $ python -m zyte_test_websites.main jobs 8888
+
 Requirements
 ============
 
