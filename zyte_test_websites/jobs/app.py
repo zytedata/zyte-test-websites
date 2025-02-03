@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 from datetime import datetime
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 import aiohttp_jinja2
 import jinja2
@@ -11,12 +11,9 @@ from aiohttp import web
 from .items import Job, JobCategory, JobsAppData, JobsDataKey
 from .views import routes
 
-if TYPE_CHECKING:
-    from pathlib import Path
 
-
-def load_data(data_path: Path) -> JobsAppData:
-    d: dict[str, list[dict[str, Any]]] = json.loads(data_path.read_bytes())
+def load_data(data: str) -> JobsAppData:
+    d: dict[str, list[dict[str, Any]]] = json.loads(data)
     categories: dict[int, JobCategory] = {}
     jobs: dict[int, Job] = {}
     for cat_dict in d["categories"]:
@@ -46,9 +43,9 @@ def load_data(data_path: Path) -> JobsAppData:
     return JobsAppData(categories=categories, jobs=jobs)
 
 
-def make_app(data_path: Path) -> web.Application:
+def make_app(data: str) -> web.Application:
     app = web.Application()
-    app[JobsDataKey] = load_data(data_path)
+    app[JobsDataKey] = load_data(data)
     app.add_routes(routes)
     aiohttp_jinja2.setup(
         app,

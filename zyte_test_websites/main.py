@@ -1,7 +1,8 @@
 import sys
-from pathlib import Path
 
 from aiohttp import web
+
+from zyte_test_websites.utils import get_default_data
 
 if __name__ == "__main__":
     # TODO: when we have >1 website we should make "jobs" not hardcoded
@@ -14,5 +15,5 @@ if __name__ == "__main__":
 
     from .jobs.app import make_app
 
-    app = make_app(Path(__file__).parent / "jobs" / "data.json")
+    app = make_app(get_default_data("jobs"))
     web.run_app(app, port=port)
