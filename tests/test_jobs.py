@@ -4,10 +4,13 @@ from typing import TYPE_CHECKING
 
 import pytest
 from itemadapter import ItemAdapter
-from web_poet import HttpResponse
 
+from tests.utils import get_web_poet_response
 from zyte_test_websites.jobs.app import make_app
-from zyte_test_websites.jobs.extraction import TestJobPostingPage
+from zyte_test_websites.jobs.extraction import (
+    TestJobPostingNavigationPage,
+    TestJobPostingPage,
+)
 from zyte_test_websites.utils import get_default_data
 
 if TYPE_CHECKING:
@@ -52,11 +55,9 @@ async def test_job_detail(jobs_client):
     assert '<span class="job-location">Bogotá, Colombia</span>' in text
 
 
-async def test_extraction(jobs_client):
-    response = await jobs_client.get("/job/1888448280485890")
-    url = str(response.url)
-    web_poet_response = HttpResponse(url, await response.read())
-    page = TestJobPostingPage(web_poet_response)
+async def test_job_extraction(jobs_client):
+    response = await get_web_poet_response(jobs_client, "/job/1888448280485890")
+    page = TestJobPostingPage(response)
     descr = (
         "Family Law Attorneys deal with legal matters related to family"
         " relationships. They handle cases like divorce, child custody,"
@@ -64,7 +65,7 @@ async def test_extraction(jobs_client):
     )
     item = await page.to_item()
     assert ItemAdapter(item).asdict() == {
-        "url": url,
+        "url": str(response.url),
         "datePublished": "2023-09-07T00:00:00",
         "datePublishedRaw": "Sep 07, 2023",
         "jobTitle": "Litigation Attorney",
@@ -79,4 +80,50 @@ async def test_extraction(jobs_client):
             "dateDownloaded": item.metadata.dateDownloaded,
             "probability": 1.0,
         },
+    }
+
+
+async def test_nav_extraction(jobs_client):
+    response = await get_web_poet_response(jobs_client, "/jobs/4")
+    page = TestJobPostingNavigationPage(response)
+    item = await page.to_item()
+    job_ids = [
+        "1888448280485890",
+        "1583065288960216",
+        "2505213971303748",
+        "2973702198556912",
+        "160399666386920",
+        "2226428310491314",
+        "2962173505197183",
+        "895360732760260",
+        "360775924046834",
+        "1939835498099785",
+    ]
+    assert ItemAdapter(item).asdict() == {
+        "url": str(response.url),
+        "items": [
+            {"url": str(response.urljoin(f"/job/{job_id}")), "method": "GET"}
+            for job_id in job_ids
+        ],
+        "nextPage": {"url": str(response.urljoin("/jobs/4?page=2")), "method": "GET"},
+        "pageNumber": 1,
+        "metadata": {"dateDownloaded": item.metadata.dateDownloaded},
+    }
+
+
+async def test_nav_extraction_last_page(jobs_client):
+    response = await get_web_poet_response(jobs_client, "/jobs/10?page=7")
+    page = TestJobPostingNavigationPage(response)
+    item = await page.to_item()
+    job_ids = [
+        "1387505175033096",
+    ]
+    assert ItemAdapter(item).asdict() == {
+        "url": str(response.url),
+        "items": [
+            {"url": str(response.urljoin(f"/job/{job_id}")), "method": "GET"}
+            for job_id in job_ids
+        ],
+        "pageNumber": 7,
+        "metadata": {"dateDownloaded": item.metadata.dateDownloaded},
     }

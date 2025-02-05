@@ -8,7 +8,10 @@ from zyte_common_items import (
     BaseSalary,
     HiringOrganization,
     JobLocation,
+    JobPostingNavigationPage,
     JobPostingPage,
+    ProbabilityRequest,
+    Request,
 )
 
 if TYPE_CHECKING:
@@ -64,3 +67,26 @@ class TestJobPostingPage(JobPostingPage):
     @field
     def hiringOrganization(self) -> HiringOrganization | None:
         return HiringOrganization(name=self.css(".job-company::text").get())
+
+
+class TestJobPostingNavigationPage(JobPostingNavigationPage):
+    @field
+    def items(self) -> list[ProbabilityRequest]:
+        return [
+            ProbabilityRequest(url=self.urljoin(item_url))
+            for item_url in self.css(".job-link::attr(href)").getall()
+        ]
+
+    @field
+    def nextPage(self) -> Request | None:
+        next_url = self.css(".page-item.next .page-link::attr(href)").get()
+        if not next_url:
+            return None
+        return Request(url=self.urljoin(next_url))
+
+    @field
+    def pageNumber(self) -> int:
+        page_number = self.css(".page-item.active .page-link::text").get()
+        if not page_number:
+            raise ValueError(f"No page number found on {self.url}")
+        return int(page_number.strip())
