@@ -10,6 +10,5 @@ if TYPE_CHECKING:
 
 async def get_web_poet_response(client: TestClient[Any, Any], url: str) -> HttpResponse:
     response = await client.get(url)
-    url = str(response.url)
     body = await response.read()
-    return HttpResponse(url, body)
+    return HttpResponse(str(response.url), body)
