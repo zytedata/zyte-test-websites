@@ -10,8 +10,8 @@ readme = "README.rst"
 dependencies = [
     "aiohttp >= 3.9.0",
     "aiohttp_jinja2 >= 1.6",
-    "web-poet >= 0.14.0",
     "parsel >= 1.5.0",
+    "web-poet >= 0.14.0",
     "zyte-common-items >= 0.24.0",
 ]
 classifiers = [
