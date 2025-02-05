@@ -54,3 +54,5 @@ jobs:
         tox -e ${{ matrix.tox-job }}
     - name: coverage
       uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
