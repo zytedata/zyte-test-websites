@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import pytest
+from itemadapter import ItemAdapter
 from web_poet import HttpResponse
-from zyte_common_items import JobPosting
 
 from zyte_test_websites.jobs.app import make_app
 from zyte_test_websites.jobs.extraction import TestJobPostingPage
@@ -63,22 +63,20 @@ async def test_extraction(jobs_client):
         " adoption, and domestic disputes to provide legal guidance."
     )
     item = await page.to_item()
-    assert item == JobPosting.from_dict(
-        {
-            "url": url,
-            "datePublished": "2023-09-07T00:00:00",
-            "datePublishedRaw": "Sep 07, 2023",
-            "jobTitle": "Litigation Attorney",
-            "jobLocation": {"raw": "Bogotá, Colombia"},
-            "description": descr,
-            "descriptionHtml": f"<article>\n\n<p>{descr}</p>\n\n</article>",
-            "employmentType": "Contract",
-            "baseSalary": {"valueMin": "63K", "valueMax": "101K", "currency": "USD"},
-            "requirements": ["4 to 10 Years"],
-            "hiringOrganization": {"name": "Drax Group"},
-            "metadata": {
-                "dateDownloaded": item.metadata.dateDownloaded,
-                "probability": 1.0,
-            },
-        }
-    )
+    assert ItemAdapter(item).asdict() == {
+        "url": url,
+        "datePublished": "2023-09-07T00:00:00",
+        "datePublishedRaw": "Sep 07, 2023",
+        "jobTitle": "Litigation Attorney",
+        "jobLocation": {"raw": "Bogotá, Colombia"},
+        "description": descr,
+        "descriptionHtml": f"<article>\n\n<p>{descr}</p>\n\n</article>",
+        "employmentType": "Contract",
+        "baseSalary": {"valueMin": "63K", "valueMax": "101K", "currency": "USD"},
+        "requirements": ["4 to 10 Years"],
+        "hiringOrganization": {"name": "Drax Group"},
+        "metadata": {
+            "dateDownloaded": item.metadata.dateDownloaded,
+            "probability": 1.0,
+        },
+    }
