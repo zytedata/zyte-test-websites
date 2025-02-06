@@ -25,7 +25,8 @@ async def index(request: web.Request) -> dict[str, Any]:
         page = int(request.query.get("page", 1))
     except ValueError:
         raise web.HTTPNotFound
-    if page > 1 and page * CATS_PER_PAGE > len(categories):
+    total_pages = len(categories) // CATS_PER_PAGE + 1
+    if page >= total_pages:
         raise web.HTTPNotFound
 
     return {
@@ -33,7 +34,7 @@ async def index(request: web.Request) -> dict[str, Any]:
             CATS_PER_PAGE * (page - 1) : CATS_PER_PAGE * page
         ],
         "current_page": page,
-        "total_pages": len(categories) // CATS_PER_PAGE + 1,
+        "total_pages": total_pages,
         "total_categories": len(categories),
         "base_url": request.path,
     }
@@ -55,7 +56,8 @@ async def job_list(request: web.Request) -> dict[str, Any]:
         page = int(request.query.get("page", 1))
     except ValueError:
         raise web.HTTPNotFound
-    if page > 1 and page * JOBS_PER_PAGE > len(category.jobs):
+    total_pages = len(category.jobs) // JOBS_PER_PAGE + 1
+    if page > total_pages:
         raise web.HTTPNotFound
 
     return {
@@ -66,7 +68,7 @@ async def job_list(request: web.Request) -> dict[str, Any]:
             reverse=True,
         )[JOBS_PER_PAGE * (page - 1) : JOBS_PER_PAGE * page],
         "current_page": page,
-        "total_pages": len(category.jobs) // JOBS_PER_PAGE + 1,
+        "total_pages": total_pages,
         "total_jobs": len(category.jobs),
         "base_url": request.path,
     }

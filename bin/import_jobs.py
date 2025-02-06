@@ -50,7 +50,7 @@ def import_jobs(
                 .split(", "),
                 responsibilities=row["Responsibilities"],
                 company_name=row["Company"],
-                location=f"{row['location']}, {row['Country']}",
+                location=f"{row['location'].encode('latin1').decode('utf-8')}, {row['Country']}",
             )
         )
         job_count += 1

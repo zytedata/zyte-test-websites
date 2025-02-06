@@ -1,0 +1,4 @@
+from itemadapter import ItemAdapter
+from zyte_common_items import ZyteItemAdapter
+
+ItemAdapter.ADAPTER_CLASSES.appendleft(ZyteItemAdapter)
