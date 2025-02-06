@@ -66,7 +66,7 @@ async def test_job_extraction(jobs_client):
     item = await page.to_item()
     assert ItemAdapter(item).asdict() == {
         "url": str(response.url),
-        "datePublished": "2023-09-07T00:00:00",
+        "datePublished": "2023-09-07T00:00:00Z",
         "datePublishedRaw": "Sep 07, 2023",
         "jobTitle": "Litigation Attorney",
         "jobLocation": {"raw": "Bogotá, Colombia"},
@@ -87,23 +87,27 @@ async def test_nav_extraction(jobs_client):
     response = await get_web_poet_response(jobs_client, "/jobs/4")
     page = TestJobPostingNavigationPage(response)
     item = await page.to_item()
-    job_ids = [
-        "1888448280485890",
-        "1583065288960216",
-        "2505213971303748",
-        "2973702198556912",
-        "160399666386920",
-        "2226428310491314",
-        "2962173505197183",
-        "895360732760260",
-        "360775924046834",
-        "1939835498099785",
+    jobs = [
+        ("1888448280485890", "Litigation Attorney"),
+        ("1583065288960216", "Interior Designer"),
+        ("2505213971303748", "IT Administrator"),
+        ("2973702198556912", "Digital Marketing Specialist"),
+        ("160399666386920", "Legal Assistant"),
+        ("2226428310491314", "Customer Support Specialist"),
+        ("2962173505197183", "Substance Abuse Counselor"),
+        ("895360732760260", "Social Media Manager"),
+        ("360775924046834", "Procurement Manager"),
+        ("1939835498099785", "Physician Assistant"),
     ]
     assert ItemAdapter(item).asdict() == {
         "url": str(response.url),
         "items": [
-            {"url": str(response.urljoin(f"/job/{job_id}")), "method": "GET"}
-            for job_id in job_ids
+            {
+                "url": str(response.urljoin(f"/job/{job[0]}")),
+                "method": "GET",
+                "name": job[1],
+            }
+            for job in jobs
         ],
         "nextPage": {"url": str(response.urljoin("/jobs/4?page=2")), "method": "GET"},
         "pageNumber": 1,
@@ -115,14 +119,18 @@ async def test_nav_extraction_last_page(jobs_client):
     response = await get_web_poet_response(jobs_client, "/jobs/10?page=7")
     page = TestJobPostingNavigationPage(response)
     item = await page.to_item()
-    job_ids = [
-        "1387505175033096",
+    jobs = [
+        ("1387505175033096", "Event Coordinator"),
     ]
     assert ItemAdapter(item).asdict() == {
         "url": str(response.url),
         "items": [
-            {"url": str(response.urljoin(f"/job/{job_id}")), "method": "GET"}
-            for job_id in job_ids
+            {
+                "url": str(response.urljoin(f"/job/{job[0]}")),
+                "method": "GET",
+                "name": job[1],
+            }
+            for job in jobs
         ],
         "pageNumber": 7,
         "metadata": {"dateDownloaded": item.metadata.dateDownloaded},

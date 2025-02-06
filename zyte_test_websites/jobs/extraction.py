@@ -13,6 +13,7 @@ from zyte_common_items import (
     ProbabilityRequest,
     Request,
 )
+from zyte_common_items.util import format_datetime
 
 if TYPE_CHECKING:
     from parsel import Selector, SelectorList
@@ -21,7 +22,7 @@ if TYPE_CHECKING:
 class TestJobPostingPage(JobPostingPage):
     @field
     def datePublished(self) -> str | None:
-        return datetime.strptime(self.datePublishedRaw, "%b %d, %Y").isoformat()
+        return format_datetime(datetime.strptime(self.datePublishedRaw, "%b %d, %Y"))
 
     @field
     def datePublishedRaw(self) -> str | None:
@@ -73,8 +74,11 @@ class TestJobPostingNavigationPage(JobPostingNavigationPage):
     @field
     def items(self) -> list[ProbabilityRequest]:
         return [
-            ProbabilityRequest(url=self.urljoin(item_url))
-            for item_url in self.css(".job-link::attr(href)").getall()
+            ProbabilityRequest(
+                url=self.urljoin(item_link.css("::attr(href)").get()),
+                name=item_link.css("::text").get(),
+            )
+            for item_link in self.css(".job-link")
         ]
 
     @field
@@ -85,8 +89,8 @@ class TestJobPostingNavigationPage(JobPostingNavigationPage):
         return Request(url=self.urljoin(next_url))
 
     @field
-    def pageNumber(self) -> int:
+    def pageNumber(self) -> int | None:
         page_number = self.css(".page-item.active .page-link::text").get()
         if not page_number:
-            raise ValueError(f"No page number found on {self.url}")
+            return None
         return int(page_number.strip())
