@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from web_poet import field
 from zyte_common_items import (
@@ -22,7 +22,7 @@ if TYPE_CHECKING:
 class TestJobPostingPage(JobPostingPage):
     @field
     def jobPostingId(self) -> str | None:
-        return self.url.rstrip("/").split("/")[-1]
+        return cast(str, self.url).rstrip("/").split("/")[-1]
 
     @field
     def datePublished(self) -> str | None:
