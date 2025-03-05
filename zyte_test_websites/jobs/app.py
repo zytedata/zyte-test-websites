@@ -8,6 +8,7 @@ import aiohttp_jinja2
 import jinja2
 from aiohttp import web
 
+from ..utils import get_default_data
 from .items import Job, JobCategory, JobsAppData, JobsDataKey
 from .views import routes
 
@@ -43,7 +44,9 @@ def load_data(data: str) -> JobsAppData:
     return JobsAppData(categories=categories, jobs=jobs)
 
 
-def make_app(data: str) -> web.Application:
+def make_app(data: str | None = None) -> web.Application:
+    if data is None:
+        data = get_default_data("jobs")
     app = web.Application()
     app[JobsDataKey] = load_data(data)
     app.add_routes(routes)
