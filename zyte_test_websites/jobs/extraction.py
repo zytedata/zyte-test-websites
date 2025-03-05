@@ -21,6 +21,10 @@ if TYPE_CHECKING:
 
 class TestJobPostingPage(JobPostingPage):
     @field
+    def jobPostingId(self) -> str | None:
+        return self.url.rstrip("/").split("/")[-1]
+
+    @field
     def datePublished(self) -> str | None:
         return format_datetime(datetime.strptime(self.datePublishedRaw, "%b %d, %Y"))
 

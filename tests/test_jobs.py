@@ -66,6 +66,7 @@ async def test_job_extraction(jobs_client):
     item = await page.to_item()
     assert ItemAdapter(item).asdict() == {
         "url": str(response.url),
+        "jobPostingId": "1888448280485890",
         "datePublished": "2023-09-07T00:00:00Z",
         "datePublishedRaw": "Sep 07, 2023",
         "jobTitle": "Litigation Attorney",
