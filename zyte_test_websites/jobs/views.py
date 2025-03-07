@@ -1,17 +1,18 @@
 from __future__ import annotations
 
 import operator
+from collections import defaultdict
 from typing import Any
 
 import aiohttp_jinja2
 from aiohttp import web
 
-from .items import JobsDataKey
+from .items import Job, JobsDataKey
 
 routes = web.RouteTableDef()
 
 
-CATS_PER_PAGE = 10
+CATS_PER_PAGE = 20
 JOBS_PER_PAGE = 10
 
 
@@ -26,17 +27,19 @@ async def index(request: web.Request) -> dict[str, Any]:
     except ValueError:
         raise web.HTTPNotFound
     total_pages = len(categories) // CATS_PER_PAGE + 1
-    if page >= total_pages:
+    if page > total_pages:
         raise web.HTTPNotFound
 
+    start = CATS_PER_PAGE * (page - 1)
     return {
         "categories": sorted(categories.values(), key=operator.attrgetter("id"))[
-            CATS_PER_PAGE * (page - 1) : CATS_PER_PAGE * page
+            start : start + CATS_PER_PAGE
         ],
         "current_page": page,
         "total_pages": total_pages,
         "total_categories": len(categories),
-        "base_url": request.path,
+        "start": start,
+        "base_url": request.rel_url,
     }
 
 
@@ -60,17 +63,19 @@ async def job_list(request: web.Request) -> dict[str, Any]:
     if page > total_pages:
         raise web.HTTPNotFound
 
+    start = JOBS_PER_PAGE * (page - 1)
     return {
         "category": category,
         "jobs": sorted(
             category.jobs.values(),
             key=operator.attrgetter("date_published"),
             reverse=True,
-        )[JOBS_PER_PAGE * (page - 1) : JOBS_PER_PAGE * page],
+        )[start : start + JOBS_PER_PAGE],
         "current_page": page,
         "total_pages": total_pages,
         "total_jobs": len(category.jobs),
-        "base_url": request.path,
+        "start": start,
+        "base_url": request.rel_url,
     }
 
 
@@ -87,3 +92,63 @@ async def job_detail(request: web.Request) -> dict[str, Any]:
         raise web.HTTPNotFound
 
     return {"job": job}
+
+
+@routes.get("/search", name="search")
+@aiohttp_jinja2.template("search_results.jinja2")
+async def search(request: web.Request) -> dict[str, Any]:
+    """A search results page"""
+    try:
+        page = int(request.query.get("page", 1))
+    except ValueError:
+        raise web.HTTPNotFound
+
+    q = request.query.get("q")
+    if not q:
+        return {
+            "jobs": [],
+            "query": "",
+            "current_page": page,
+            "total_pages": 1,
+            "total_jobs": 0,
+            "base_url": request.rel_url,
+        }
+
+    q = q.lower()
+    all_jobs = request.app[JobsDataKey].jobs
+    fields = (
+        "title",
+        "description",
+        "company_name",
+        "location",
+    )
+    buckets: defaultdict[str, list[Job]] = defaultdict(list)
+
+    for job in all_jobs.values():
+        for field in fields:
+            if q in getattr(job, field).lower():
+                buckets[field].append(job)
+                break
+
+    jobs = []
+    for field in fields:
+        jobs.extend(
+            sorted(
+                buckets[field], key=operator.attrgetter("date_published"), reverse=True
+            )
+        )
+
+    total_pages = len(jobs) // JOBS_PER_PAGE + 1
+    if page > total_pages:
+        raise web.HTTPNotFound
+
+    start = JOBS_PER_PAGE * (page - 1)
+    return {
+        "jobs": jobs[start : start + JOBS_PER_PAGE],
+        "query": q,
+        "current_page": page,
+        "total_pages": total_pages,
+        "total_jobs": len(jobs),
+        "start": start,
+        "base_url": request.rel_url,
+    }

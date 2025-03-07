@@ -2,7 +2,8 @@
     <ul class="pagination">
         {% if current_page > 1 %}
             <li class="page-item prev">
-                <a class="page-link" href="{{ base_url }}?page={{ current_page - 1 }}">← Previous</a>
+                <a class="page-link"
+                   href="{{ base_url.update_query(page=current_page - 1) }}">← Previous</a>
             </li>
         {% else %}
             <li class="page-item prev disabled">
@@ -16,13 +17,14 @@
                 </li>
             {% else %}
                 <li class="page-item">
-                    <a class="page-link" href="{{ base_url }}?page={{ page }}">{{ page }}</a>
+                    <a class="page-link" href="{{ base_url.update_query(page=page) }}">{{ page }}</a>
                 </li>
             {% endif %}
         {% endfor %}
         {% if current_page < total_pages %}
             <li class="page-item next">
-                <a class="page-link" href="{{ base_url }}?page={{ current_page + 1 }}">Next →</a>
+                <a class="page-link"
+                   href="{{ base_url.update_query(page=current_page + 1) }}">Next →</a>
             </li>
         {% else %}
             <li class="page-item next disabled">
