@@ -11,8 +11,16 @@
     </head>
     <body>
         <main class="container">
+            <form class="d-flex" action="{{ url('search') }}" method="get">
+                <input class="form-control"
+                       type="search"
+                       placeholder="Search"
+                       aria-label="Search"
+                       name="q">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
             <h1>{{ total_categories }} job categories:</h1>
-            <ol id="categories">
+            <ol id="categories" start="{{ start + 1 }}">
                 {% for cat in categories %}
                     <li class="category-li">
                         <a href="{{ cat.url }}">{{ cat.name }}</a>
