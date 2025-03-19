@@ -39,10 +39,10 @@ jobs:
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
         tox-job: ["py"]
         include:
-          - python-version: '3.9'
-            tox-job: ["pinned"]
-          - python-version: '3.13'
-            tox-job: ["no-extras"]
+          - python-version: "3.9"
+            tox-job: "pinned"
+          - python-version: "3.13"
+            tox-job: "no-extras"
 
     steps:
     - uses: actions/checkout@v4
