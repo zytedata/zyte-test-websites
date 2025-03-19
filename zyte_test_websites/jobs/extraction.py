@@ -18,6 +18,11 @@ from zyte_common_items.util import format_datetime
 if TYPE_CHECKING:
     from parsel import Selector, SelectorList
 
+__all__ = [
+    "TestJobPostingNavigationPage",
+    "TestJobPostingPage",
+]
+
 
 class TestJobPostingPage(JobPostingPage):
     @field

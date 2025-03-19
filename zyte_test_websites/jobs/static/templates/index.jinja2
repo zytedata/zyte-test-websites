@@ -23,7 +23,7 @@
             <ol id="categories" start="{{ start + 1 }}">
                 {% for cat in categories %}
                     <li class="category-li">
-                        <a href="{{ cat.url }}">{{ cat.name }}</a>
+                        <a href="{{ url('job_list', category_id=cat.id) }}">{{ cat.name }}</a>
                     </li>
                 {% endfor %}
             </ol>

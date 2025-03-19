@@ -10,9 +10,6 @@ readme = "README.rst"
 dependencies = [
     "aiohttp >= 3.9.0",
     "aiohttp_jinja2 >= 1.6",
-    "parsel >= 1.5.0",
-    "web-poet >= 0.14.0",
-    "zyte-common-items >= 0.24.0",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -30,6 +27,13 @@ classifiers = [
 ]
 requires-python = ">=3.9"
 dynamic = ["version"]
+
+[project.optional-dependencies]
+web-poet = [
+    "parsel >= 1.5.0",
+    "web-poet >= 0.14.0",
+    "zyte-common-items >= 0.24.0",
+]
 
 [project.urls]
 Source = "https://github.com/zytedata/zyte-test-websites"
@@ -156,8 +160,12 @@ ignore = [
     "PLR0915",
     # Magic value used in comparison
     "PLR2004",
+    # Mutable class attributes should be annotated with `typing.ClassVar`
+    "RUF012",
     # Use of `assert` detected
-    "S101"
+    "S101",
+    # Add quotes to type expression in `typing.cast()`
+    "TC006",
 ]
 
 [tool.ruff.lint.pydocstyle]

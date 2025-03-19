@@ -15,10 +15,6 @@ class JobCategory:
     name: str
     jobs: dict[int, Job]
 
-    @property
-    def url(self) -> str:
-        return f"/jobs/{self.id}"
-
     def to_dict(self) -> dict[str, Any]:
         return {
             "id": self.id,
@@ -42,10 +38,6 @@ class Job:
     responsibilities: str
     company_name: str
     location: str
-
-    @property
-    def url(self) -> str:
-        return f"/job/{self.id}"
 
     def to_dict(self) -> dict[str, Any]:
         return {

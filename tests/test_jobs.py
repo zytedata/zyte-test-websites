@@ -12,7 +12,6 @@ from zyte_test_websites.jobs.extraction import (
     TestJobPostingPage,
 )
 from zyte_test_websites.jobs.views import CATS_PER_PAGE, JOBS_PER_PAGE
-from zyte_test_websites.utils import get_default_data
 
 if TYPE_CHECKING:
     from aiohttp.pytest_plugin import AiohttpClient
@@ -24,7 +23,7 @@ if TYPE_CHECKING:
 async def jobs_client(
     aiohttp_client: AiohttpClient,
 ) -> TestClient[Request, Application]:
-    app = make_app(get_default_data("jobs"))
+    app = make_app()
     return await aiohttp_client(app)
 
 
