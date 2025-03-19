@@ -14,7 +14,10 @@
             <h1>{{ job.title }}</h1>
             <p class="job-date">Published on {{ job.date_published.strftime("%b %d, %Y") }}</p>
             <h6>
-                <span class="job-category"><a class="job-category-link" href="{{ job.category.url }}">{{ job.category.name }}</a></span>
+                <span class="job-category">
+                    <a class="job-category-link"
+                       href="{{ url('job_list', category_id=job.category.id) }}">{{ job.category.name }}</a>
+                </span>
                 ·
                 <span class="job-company">{{ job.company_name }}</span>
                 ·

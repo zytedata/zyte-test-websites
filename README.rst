@@ -33,6 +33,7 @@ Features:
 * A page with job categories with pagination.
 * Pages with jobs in a category with pagination.
 * Pages with single job details.
+* A search form with results pagination.
 
 Run it with:
 
@@ -42,8 +43,23 @@ Run it with:
 
 You can access it at http://localhost:8888.
 
+Page objects
+============
+
+zyte-test-websites also includes page objects that can be used to extract
+zyte-common-items_ objects from the provided websites.
+
+Job postings
+------------
+
+* ``zyte_test_websites.jobs.extraction.TestJobPostingPage``
+* ``zyte_test_websites.jobs.extraction.TestJobPostingNavigationPage``
+
 Requirements
 ============
 
 * Python >= 3.9
 * aiohttp
+
+
+.. _zyte-common-items: https://zyte-common-items.readthedocs.io/en/latest/usage/items.html

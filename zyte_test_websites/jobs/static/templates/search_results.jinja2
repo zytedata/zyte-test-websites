@@ -16,7 +16,7 @@
                 {% for job in jobs %}
                     <li class="job-li">
                         <h2 class="job-title">
-                            <a class="job-link" href="{{ job.url }}">{{ job.title }}</a>
+                            <a class="job-link" href="{{ url('job_detail', job_id=job.id) }}">{{ job.title }}</a>
                         </h2>
                         <p>Company: {{ job.company_name }}</p>
                         <p>Location: {{ job.location }}</p>

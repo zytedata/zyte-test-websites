@@ -43,7 +43,7 @@ async def index(request: web.Request) -> dict[str, Any]:
     }
 
 
-@routes.get("/jobs/{category_id}")
+@routes.get("/jobs/{category_id}", name="job_list")
 @aiohttp_jinja2.template("job_list.jinja2")
 async def job_list(request: web.Request) -> dict[str, Any]:
     """A page with a list of job postings"""
@@ -79,7 +79,7 @@ async def job_list(request: web.Request) -> dict[str, Any]:
     }
 
 
-@routes.get("/job/{job_id}")
+@routes.get("/job/{job_id}", name="job_detail")
 @aiohttp_jinja2.template("job_detail.jinja2")
 async def job_detail(request: web.Request) -> dict[str, Any]:
     """A job posting page"""
@@ -111,6 +111,7 @@ async def search(request: web.Request) -> dict[str, Any]:
             "current_page": page,
             "total_pages": 1,
             "total_jobs": 0,
+            "start": 0,
             "base_url": request.rel_url,
         }
 
