@@ -166,8 +166,10 @@ class TestProductListPage(ProductListPage):
         next_link = self.css(".page-item.next .page-link")
         if not next_link:
             return None
+        next_url = next_link.css("::attr(href)").get()
+        assert next_url
         return Link(
-            url=self.urljoin(next_link.css("::attr(href)").get()),
+            url=self.urljoin(next_url),
             text=next_link.css("::text").get(),
         )
 
