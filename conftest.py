@@ -23,6 +23,16 @@ configure_itemadapter()
 
 
 @pytest.fixture
+async def ecommerce_client(
+    aiohttp_client: AiohttpClient,
+) -> TestClient[Request, Application]:
+    from zyte_test_websites.ecommerce.app import make_app
+
+    app = make_app()
+    return await aiohttp_client(app)
+
+
+@pytest.fixture
 async def jobs_client(
     aiohttp_client: AiohttpClient,
 ) -> TestClient[Request, Application]:
