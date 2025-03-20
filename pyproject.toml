@@ -40,6 +40,14 @@ web-poet = [
 Source = "https://github.com/zytedata/zyte-test-websites"
 Tracker = "https://github.com/zytedata/zyte-test-websites/issues"
 
+[tool.coverage.run]
+branch = true
+
+[tool.coverage.report]
+exclude_also = [
+    "if TYPE_CHECKING:",
+]
+
 [[tool.mypy.overrides]]
 module = "tests.*"
 check_untyped_defs = true
