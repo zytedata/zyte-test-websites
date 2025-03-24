@@ -11,6 +11,7 @@ from zyte_common_items import (
     Breadcrumb,
     Link,
     ProbabilityRequest,
+    Product,
     ProductFromList,
     ProductFromListSelectorExtractor,
     ProductListPage,
@@ -31,7 +32,12 @@ __all__ = [
 
 
 class TestProductPage(ProductPage):
-    @field
+    def validate_input(self) -> Product | None:
+        if self.xpath("//h2[text()='Product Description']"):
+            return None
+        return cast(Product, self.no_item_found())
+
+    @field(cached=True)  # type: ignore[misc]
     def additionalProperties(self) -> list[AdditionalProperty] | None:
         result: list[AdditionalProperty] = []
         for dt in self.xpath(

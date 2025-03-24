@@ -8,7 +8,7 @@ import jinja2
 from aiohttp import web
 
 from ..utils import get_default_data
-from .items import Product, ProductCategory, ProductsAppData, ProductsDataKey
+from .models import Product, ProductCategory, ProductsAppData, ProductsDataKey
 from .views import routes
 
 

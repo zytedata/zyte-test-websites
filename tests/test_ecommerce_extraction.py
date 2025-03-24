@@ -68,6 +68,14 @@ async def test_product_extraction(ecommerce_client):
     }
 
 
+async def test_product_extraction_wrong(ecommerce_client):
+    response = await get_web_poet_response(ecommerce_client, "/category/4")
+    page = TestProductPage(response)
+    item = await page.to_item()
+    assert item.url == str(response.url)
+    assert item.metadata.probability == 0.0
+
+
 async def test_nav_extraction_only_products(ecommerce_client):
     response = await get_web_poet_response(ecommerce_client, "/category/4")
     page = TestProductNavigationPage(response)

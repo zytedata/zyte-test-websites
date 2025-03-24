@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
 import aiohttp_jinja2
 from aiohttp import web
 
-from .items import Product, ProductCategory, ProductsDataKey
+from .models import Product, ProductCategory, ProductsDataKey
 
 if TYPE_CHECKING:
     from yarl import URL

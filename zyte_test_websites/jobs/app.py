@@ -9,7 +9,7 @@ import jinja2
 from aiohttp import web
 
 from ..utils import get_default_data
-from .items import Job, JobCategory, JobsAppData, JobsDataKey
+from .models import Job, JobCategory, JobsAppData, JobsDataKey
 from .views import routes
 
 

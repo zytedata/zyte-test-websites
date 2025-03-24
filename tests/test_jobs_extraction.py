@@ -36,6 +36,14 @@ async def test_job_extraction(jobs_client):
     }
 
 
+async def test_job_extraction_wrong(jobs_client):
+    response = await get_web_poet_response(jobs_client, "/jobs/4")
+    page = TestJobPostingPage(response)
+    item = await page.to_item()
+    assert item.url == str(response.url)
+    assert item.metadata.probability == 0.0
+
+
 async def test_nav_extraction(jobs_client):
     response = await get_web_poet_response(jobs_client, "/jobs/4")
     page = TestJobPostingNavigationPage(response)

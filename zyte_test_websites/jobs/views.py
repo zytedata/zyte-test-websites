@@ -7,7 +7,7 @@ from typing import Any
 import aiohttp_jinja2
 from aiohttp import web
 
-from .items import Job, JobsDataKey
+from .models import Job, JobsDataKey
 
 routes = web.RouteTableDef()
 
