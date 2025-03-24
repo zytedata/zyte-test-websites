@@ -8,6 +8,7 @@ from zyte_common_items import (
     BaseSalary,
     HiringOrganization,
     JobLocation,
+    JobPosting,
     JobPostingNavigationPage,
     JobPostingPage,
     ProbabilityRequest,
@@ -25,6 +26,11 @@ __all__ = [
 
 
 class TestJobPostingPage(JobPostingPage):
+    def validate_input(self) -> JobPosting | None:
+        if self.xpath("//dt[text()='Job description']"):
+            return None
+        return cast(JobPosting, self.no_item_found())
+
     @field
     def jobPostingId(self) -> str | None:
         return cast(str, self.url).rstrip("/").split("/")[-1]
@@ -33,7 +39,7 @@ class TestJobPostingPage(JobPostingPage):
     def datePublished(self) -> str | None:
         return format_datetime(datetime.strptime(self.datePublishedRaw, "%b %d, %Y"))
 
-    @field
+    @field(cached=True)  # type: ignore[misc]
     def datePublishedRaw(self) -> str | None:
         return self.css(".job-date::text").re_first(r"Published on (.+)")
 
