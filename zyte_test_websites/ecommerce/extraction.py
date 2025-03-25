@@ -170,10 +170,9 @@ class TestProductListPage(ProductListPage):
     @field
     def paginationNext(self) -> Link | None:
         next_link = self.css(".page-item.next .page-link")
-        if not next_link:
-            return None
         next_url = next_link.css("::attr(href)").get()
-        assert next_url
+        if not next_url:
+            return None
         return Link(
             url=self.urljoin(next_url),
             text=next_link.css("::text").get(),
