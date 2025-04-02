@@ -13,7 +13,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from zyte_test_websites.jobs.items import Job, JobCategory
+from zyte_test_websites.jobs.models import Job, JobCategory
 
 
 def import_jobs(

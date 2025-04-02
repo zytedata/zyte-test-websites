@@ -173,8 +173,6 @@ ignore = [
     "RUF012",
     # Use of `assert` detected
     "S101",
-    # Add quotes to type expression in `typing.cast()`
-    "TC006",
 ]
 
 [tool.ruff.lint.pydocstyle]

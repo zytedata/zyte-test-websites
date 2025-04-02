@@ -40,3 +40,13 @@ async def jobs_client(
 
     app = make_app()
     return await aiohttp_client(app)
+
+
+@pytest.fixture
+async def articles_client(
+    aiohttp_client: AiohttpClient,
+) -> TestClient[Request, Application]:
+    from zyte_test_websites.articles.app import make_app
+
+    app = make_app()
+    return await aiohttp_client(app)

@@ -1,0 +1,52 @@
+<nav>
+    <ul class="pagination">
+        {% if current_page > 1 %}
+            <li class="page-item prev">
+                <a class="page-link"
+                   href="{{ base_url.update_query(page=current_page - 1) }}">← Previous</a>
+            </li>
+        {% else %}
+            <li class="page-item prev disabled">
+                <span class="page-link">← Previous</span>
+            </li>
+        {% endif %}
+        {% if show_start_ellipsis %}
+            <li class="page-item">
+                <a class="page-link" href="{{ base_url }}">1</a>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">...</span>
+            </li>
+        {% endif %}
+        {% for page in page_range or range(1, total_pages + 1) %}
+            {% if page == current_page %}
+                <li class="page-item active">
+                    <span class="page-link">{{ page }}</span>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ base_url.update_query(page=page) }}">{{ page }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        {% if show_end_ellipsis %}
+            <li class="page-item disabled">
+                <span class="page-link">...</span>
+            </li>
+            <li class="page-item">
+                <a class="page-link"
+                   href="{{ base_url.update_query(page=total_pages) }}">{{ total_pages }}</a>
+            </li>
+        {% endif %}
+        {% if current_page < total_pages %}
+            <li class="page-item next">
+                <a class="page-link"
+                   href="{{ base_url.update_query(page=current_page + 1) }}">Next →</a>
+            </li>
+        {% else %}
+            <li class="page-item next disabled">
+                <span class="page-link">Next →</span>
+            </li>
+        {% endif %}
+    </ul>
+</nav>

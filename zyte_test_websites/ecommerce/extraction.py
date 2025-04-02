@@ -35,7 +35,7 @@ class TestProductPage(ProductPage):
     def validate_input(self) -> Product | None:
         if self.xpath("//h2[text()='Product Description']"):
             return None
-        return cast(Product, self.no_item_found())
+        return cast("Product", self.no_item_found())
 
     @field(cached=True)  # type: ignore[misc]
     def additionalProperties(self) -> list[AdditionalProperty] | None:
@@ -79,7 +79,7 @@ class TestProductPage(ProductPage):
 
     @field
     def productId(self) -> str | None:
-        return cast(str, self.url).rstrip("/").split("/")[-1]
+        return cast("str", self.url).rstrip("/").split("/")[-1]
 
     @field
     def sku(self) -> str | None:
@@ -144,7 +144,7 @@ class TestProductFromListExtractor(ProductFromListSelectorExtractor, PriceMixin)
 
     @field
     def productId(self) -> str | None:
-        return cast(str, self.url).rstrip("/").split("/")[-1]
+        return cast("str", self.url).rstrip("/").split("/")[-1]
 
     @field
     def url(self) -> str | None:

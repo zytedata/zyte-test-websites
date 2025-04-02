@@ -1,0 +1,20 @@
+<article class="card mb-4">
+    <div class="card-body">
+        <div class="small text-muted mb-2">
+            <a href="{{ url('author', author_id=article.author.id) }}"
+               class="text-decoration-none">{{ article.author.name }}</a>
+            <span class="mx-1">wrote</span>
+        </div>
+        <h2 class="card-title h4">
+            <a href="{{ url('article_detail', article_id=article.id) }}"
+               class="text-decoration-none">{{ article.title }}</a>
+        </h2>
+        <p class="card-text">
+            <small class="text-muted">{{ article.date.strftime("%B %d, %Y") }}</small>
+            <br>
+            {{ article.summary }}
+        </p>
+        <a href="{{ url('article_detail', article_id=article.id) }}"
+           class="btn btn-link px-0">Read more…</a>
+    </div>
+</article>
