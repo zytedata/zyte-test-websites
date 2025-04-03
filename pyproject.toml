@@ -8,7 +8,7 @@ description = "Websites for testing spiders"
 authors = [{name = "Zyte Group Ltd", email = "info@zyte.com"}]
 readme = "README.rst"
 dependencies = [
-    "aiohttp >= 3.9.0",
+    "aiohttp >= 3.10.7",
     "aiohttp_jinja2 >= 1.6",
 ]
 classifiers = [
