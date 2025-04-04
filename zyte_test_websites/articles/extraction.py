@@ -74,9 +74,9 @@ class TestArticlePage(ArticlePage):
     def articleBody(self) -> str | None:
         return self.css(".article-content div::text").get()
 
-    @field(out=[article_body_html_processor])
+    @field(out=[article_body_html_processor])  # type: ignore[misc]
     def articleBodyHtml(self) -> Selector:
-        return self.css(".article-content")[0]
+        return cast("Selector", self.css(".article-content")[0])
 
 
 class TestArticleNavigationPage(ArticleNavigationPage):
