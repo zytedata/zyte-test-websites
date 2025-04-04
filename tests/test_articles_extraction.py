@@ -80,10 +80,7 @@ async def test_nav_extraction(articles_client):
         ("746", "Singer Knight backs anti-gun song"),
         ("599", "Berlin cheers for anti-Nazi film"),
         ("778", "Michael film signals 'retirement'"),
-        (
-            "606",
-            "Surprise win for anti-Bush film",
-        ),
+        ("606", "Surprise win for anti-Bush film"),
         ("785", "Rocker Doherty in on-stage fight"),
         ("546", "Film row over Pirates 'cannibals'"),
         ("725", "Housewives lift Channel 4 ratings"),
@@ -119,10 +116,7 @@ async def test_nav_extraction_last_page(articles_client):
         ("727", "Stern dropped from radio stations"),
         ("542", "DVD review: Harry Potter and the Prisoner of Azkaban"),
         ("721", "Little Britain two top comic list"),
-        (
-            "538",
-            "Baghdad Blogger on big screen",
-        ),
+        ("538", "Baghdad Blogger on big screen"),
         ("717", "Duran Duran show set for US TV"),
     ]
     assert ItemAdapter(item).asdict() == {
