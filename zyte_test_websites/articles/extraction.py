@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import cast
+from typing import TYPE_CHECKING, Any, cast
 
+from clear_html import clean_node, cleaned_node_to_html
 from web_poet import field
 from zyte_common_items import (
     Article,
@@ -13,10 +14,20 @@ from zyte_common_items import (
     Request,
 )
 
+if TYPE_CHECKING:
+    from parsel import Selector
+
+
 __all__ = [
     "TestArticleNavigationPage",
     "TestArticlePage",
 ]
+
+
+def article_body_html_processor(value: Selector, page: Any) -> str:
+    """Extract and clean the HTML from the provided selector."""
+    cleaned_node = clean_node(value.root, page.url)
+    return cleaned_node_to_html(cleaned_node)
 
 
 class TestArticlePage(ArticlePage):
@@ -63,9 +74,9 @@ class TestArticlePage(ArticlePage):
     def articleBody(self) -> str | None:
         return self.css(".article-content div::text").get()
 
-    @field
-    def articleBodyHtml(self) -> str | None:
-        return self.css(".article-content").get()
+    @field(out=[article_body_html_processor])
+    def articleBodyHtml(self) -> Selector:
+        return self.css(".article-content")[0]
 
 
 class TestArticleNavigationPage(ArticleNavigationPage):

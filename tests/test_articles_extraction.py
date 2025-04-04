@@ -45,9 +45,7 @@ async def test_article_extraction(articles_client):
     item = await page.to_item()
     assert ItemAdapter(item).asdict() == {
         "articleBody": body,
-        "articleBodyHtml": f"""<article class="article-content">
-                    <div class="text-justify">{body}</div>
-                </article>""",
+        "articleBodyHtml": f"""<article>\n\n<p>{body}</p>\n\n</article>""",
         "authors": [{"name": "Eve Wilson", "url": str(response.urljoin("/author/4"))}],
         "datePublished": "2024-06-21T00:00:00",
         "datePublishedRaw": "June 21, 2024",

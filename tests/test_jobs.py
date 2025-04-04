@@ -57,6 +57,11 @@ async def test_job_detail(jobs_client):
     assert '<span class="job-location">Bogotá, Colombia</span>' in text
 
 
+async def test_job_detail_404(jobs_client):
+    response = await jobs_client.get("/job/33333333333333")
+    assert response.status == 404
+
+
 async def test_search(jobs_client):
     response = await jobs_client.get("/search?q=dEsIgn")
     assert response.status == 200

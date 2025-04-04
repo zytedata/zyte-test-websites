@@ -59,6 +59,11 @@ async def test_article_detail(articles_client):
     assert "June 21, 2024" in text
 
 
+async def test_article_detail_404(articles_client):
+    response = await articles_client.get("/article/11900000")
+    assert response.status == 404
+
+
 async def test_search(articles_client):
     response = await articles_client.get("/search?q=sWiSS")
     assert response.status == 200
