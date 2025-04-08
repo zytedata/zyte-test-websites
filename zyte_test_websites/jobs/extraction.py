@@ -29,11 +29,11 @@ class TestJobPostingPage(JobPostingPage):
     def validate_input(self) -> JobPosting | None:
         if self.xpath("//dt[text()='Job description']"):
             return None
-        return cast(JobPosting, self.no_item_found())
+        return cast("JobPosting", self.no_item_found())
 
     @field
     def jobPostingId(self) -> str | None:
-        return cast(str, self.url).rstrip("/").split("/")[-1]
+        return cast("str", self.url).rstrip("/").split("/")[-1]
 
     @field
     def datePublished(self) -> str | None:

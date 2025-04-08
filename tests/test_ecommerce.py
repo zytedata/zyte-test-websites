@@ -92,6 +92,11 @@ async def test_product_detail(ecommerce_client):
     assert text.count("☆") == 2
 
 
+async def test_product_detail_404(ecommerce_client):
+    response = await ecommerce_client.get("/product/3000000000")
+    assert response.status == 404
+
+
 async def test_search(ecommerce_client):
     response = await ecommerce_client.get("/search?q=niGhT")
     assert response.status == 200

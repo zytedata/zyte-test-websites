@@ -11,9 +11,9 @@
     </head>
     <body>
         <main class="container">
-            {% include "breadcrumbs.jinja2" %}
+            {% include "includes/breadcrumbs.jinja2" %}
             <h1>{{ product.name }}</h1>
-            {% include "rating.jinja2" %}
+            {% include "includes/rating.jinja2" %}
             <p class="mb-0">Price: {{ product.price }}</p>
             {% if product.instock %}
                 <p class="mb-0">In stock</p>

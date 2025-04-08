@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+{# djlint:off #}
+<rss version="2.0">
+    <channel>
+        <title>Articles To Scrape - RSS Feed</title>
+        <link>{{ base_abs_url.join(url("index")) }}</link>
+        <description>RSS feed of articles.</description>
+        {% for article in articles %}
+            <item>
+                <title>{{ article.title }}</title>
+                <link>{{ base_abs_url.join(url('article_detail', article_id=article.id)) }}</link>
+                <description>{{ article.summary }}</description>
+                <pubDate>{{ article.get_rss_date() }}</pubDate>
+            </item>
+        {% endfor %}
+    </channel>
+</rss>

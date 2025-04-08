@@ -22,8 +22,31 @@ Overview
 ========
 
 zyte-test-websites contains websites that can be used by spiders to test
-scraping of websites of a specific kind. It currently contains an e-commerce
-website and a job postings website.
+scraping of websites of a specific kind. It currently contains an article
+website, an e-commerce website and a job postings website.
+
+Articles
+--------
+
+Features:
+
+* A page with article categories.
+* Pages with articles in a category with pagination.
+* Pages with single article details.
+* A search form with results pagination.
+* An RSS feed.
+* A page with a list of authors.
+* Pages with author details.
+* Some pages with static content like "Contact Us".
+
+Run it with:
+
+.. code-block:: console
+
+    $ python -m zyte_test_websites.main articles 8888
+
+You can access it at http://localhost:8888.
+
 
 E-commerce
 ----------
@@ -66,6 +89,12 @@ Page objects
 
 zyte-test-websites also includes page objects that can be used to extract
 zyte-common-items_ objects from the provided websites.
+
+Articles
+--------
+
+* ``zyte_test_websites.articles.extraction.TestArticlePage``
+* ``zyte_test_websites.articles.extraction.TestArticleNavigationPage``
 
 E-commerce
 ----------

@@ -11,7 +11,7 @@
     </head>
     <body>
         <main class="container">
-            {% include "breadcrumbs.jinja2" %}
+            {% include "includes/breadcrumbs.jinja2" %}
             <h1>{{ category.name }}</h1>
             {% if subcategories %}
                 <h2>{{ subcategories | count }} subcategories:</h2>
@@ -37,11 +37,11 @@
                             {% else %}
                                 <p class="mb-0">Out of stock</p>
                             {% endif %}
-                            {% include "rating.jinja2" %}
+                            {% include "includes/rating.jinja2" %}
                         </li>
                     {% endfor %}
                 </ol>
-                {% include "pagination.jinja2" %}
+                {% include "includes/pagination.jinja2" %}
             {% endif %}
         </main>
     </body>
