@@ -7,6 +7,7 @@ from typing import Any
 import aiohttp_jinja2
 from aiohttp import web
 
+from ..utils import get_total_pages
 from .models import Job, JobsDataKey
 
 routes = web.RouteTableDef()
@@ -26,7 +27,7 @@ async def index(request: web.Request) -> dict[str, Any]:
         page = int(request.query.get("page", 1))
     except ValueError:
         raise web.HTTPNotFound
-    total_pages = len(categories) // CATS_PER_PAGE + 1
+    total_pages = get_total_pages(len(categories), CATS_PER_PAGE)
     if page > total_pages:
         raise web.HTTPNotFound
 
@@ -59,7 +60,7 @@ async def job_list(request: web.Request) -> dict[str, Any]:
         page = int(request.query.get("page", 1))
     except ValueError:
         raise web.HTTPNotFound
-    total_pages = len(category.jobs) // JOBS_PER_PAGE + 1
+    total_pages = get_total_pages(len(category.jobs), JOBS_PER_PAGE)
     if page > total_pages:
         raise web.HTTPNotFound
 
@@ -139,7 +140,7 @@ async def search(request: web.Request) -> dict[str, Any]:
             )
         )
 
-    total_pages = len(jobs) // JOBS_PER_PAGE + 1
+    total_pages = get_total_pages(len(jobs), JOBS_PER_PAGE)
     if page > total_pages:
         raise web.HTTPNotFound
 

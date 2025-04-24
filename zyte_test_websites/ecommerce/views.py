@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Any
 import aiohttp_jinja2
 from aiohttp import web
 
+from ..utils import get_total_pages
 from .models import Product, ProductCategory, ProductsDataKey
 
 if TYPE_CHECKING:
@@ -52,7 +53,7 @@ async def index(request: web.Request) -> dict[str, Any]:
         page = int(request.query.get("page", 1))
     except ValueError:
         raise web.HTTPNotFound
-    total_pages = len(categories) // CATS_PER_PAGE + 1
+    total_pages = get_total_pages(len(categories), CATS_PER_PAGE)
     if page > total_pages:
         raise web.HTTPNotFound
 
@@ -85,7 +86,7 @@ async def category_detail(request: web.Request) -> dict[str, Any]:
         page = int(request.query.get("page", 1))
     except ValueError:
         raise web.HTTPNotFound
-    total_pages = len(category.products) // PRODUCTS_PER_PAGE + 1
+    total_pages = get_total_pages(len(category.products), PRODUCTS_PER_PAGE)
     if page > total_pages:
         raise web.HTTPNotFound
 
@@ -169,7 +170,7 @@ async def search(request: web.Request) -> dict[str, Any]:
     for field in fields:
         products.extend(sorted(buckets[field], key=operator.attrgetter("name")))
 
-    total_pages = len(products) // PRODUCTS_PER_PAGE + 1
+    total_pages = get_total_pages(len(products), PRODUCTS_PER_PAGE)
     if page > total_pages:
         raise web.HTTPNotFound
 
