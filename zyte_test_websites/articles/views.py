@@ -7,6 +7,7 @@ from typing import Any
 import aiohttp_jinja2
 from aiohttp import web
 
+from ..utils import get_pagination_args, get_total_pages
 from .models import Article, ArticlesDataKey
 
 routes = web.RouteTableDef()
@@ -73,7 +74,7 @@ async def article_list(request: web.Request) -> dict[str, Any]:
         page = int(request.query.get("page", 1))
     except ValueError:
         raise web.HTTPNotFound
-    total_pages = len(category.articles) // ARTICLES_PER_PAGE + 1
+    total_pages = get_total_pages(len(category.articles), ARTICLES_PER_PAGE)
     if page > total_pages:
         raise web.HTTPNotFound
 
@@ -182,7 +183,7 @@ async def search(request: web.Request) -> dict[str, Any]:
             sorted(buckets[field], key=operator.attrgetter("date"), reverse=True)
         )
 
-    total_pages = len(articles) // ARTICLES_PER_PAGE + 1
+    total_pages = get_total_pages(len(articles), ARTICLES_PER_PAGE)
     if page > total_pages:
         raise web.HTTPNotFound
 
@@ -194,22 +195,4 @@ async def search(request: web.Request) -> dict[str, Any]:
         "start": start,
         "base_url": request.rel_url,
         **get_pagination_args(page, total_pages),
-    }
-
-
-def get_pagination_args(page: int, total_pages: int) -> dict[str, Any]:
-    # Calculate pagination range
-    radius = 2  # Show 2 pages before and after current page
-    page_range_start = max(1, page - radius)
-    page_range_end = min(total_pages, page + radius)
-    # Ensure we always show the first and last pages
-    show_start_ellipsis = page_range_start > 1
-    show_end_ellipsis = page_range_end < total_pages
-    page_range = range(page_range_start, page_range_end + 1)
-    return {
-        "current_page": page,
-        "total_pages": total_pages,
-        "page_range": page_range,
-        "show_end_ellipsis": show_end_ellipsis,
-        "show_start_ellipsis": show_start_ellipsis,
     }
