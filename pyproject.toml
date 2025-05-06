@@ -61,6 +61,7 @@ asyncio_default_fixture_loop_scope = "function"
 version = {attr = "zyte_test_websites.__version__"}
 
 [tool.setuptools.packages.find]
+include = ["zyte_test_websites*", "tests*"]
 exclude = ["charts*", "bin*"]
 
 [tool.setuptools.package-data]
