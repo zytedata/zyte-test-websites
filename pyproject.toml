@@ -62,7 +62,7 @@ version = {attr = "zyte_test_websites.__version__"}
 
 [tool.setuptools.packages.find]
 include = ["zyte_test_websites*", "tests*"]
-exclude = ["charts*", "bin*"]
+exclude = ["helm*", "bin*"]
 
 [tool.setuptools.package-data]
 zyte_test_websites = ["py.typed"]

@@ -1,6 +1,0 @@
-apiVersion: v2
-name: zyte-test-websites
-description: A Helm chart for zyte-test-websites deployments
-type: application
-version: 0.0.1
-appVersion: "1.0.0"
