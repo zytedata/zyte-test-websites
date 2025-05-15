@@ -61,6 +61,10 @@ asyncio_default_fixture_loop_scope = "function"
 [tool.setuptools.dynamic]
 version = {attr = "zyte_test_websites.__version__"}
 
+[tool.setuptools.packages.find]
+include = ["zyte_test_websites*", "tests*"]
+exclude = ["helm*", "bin*"]
+
 [tool.setuptools.package-data]
 zyte_test_websites = ["py.typed"]
 
