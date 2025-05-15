@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "zyte-test-websites.name" . }}
+  namespace: {{ .Values.namespace }}
   labels:
     {{- include "zyte-test-websites.labels" . | indent 4 }}
 spec:

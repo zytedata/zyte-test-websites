@@ -32,5 +32,5 @@ app.kubernetes.io/instance: {{ .Release.Name | quote }}
 Create the hostname used in the ingress.
 */}}
 {{- define "zyte-test-websites.hostname" -}}
-    {{ .Values.websiteName }}.zyte-test-websites.{{ .Values.domain }}
+    {{ .Values.websiteName }}-test-website.{{ .Values.domain }}
 {{- end -}}

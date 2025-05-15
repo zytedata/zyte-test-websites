@@ -2,8 +2,8 @@
 image: zytedata/zyte-test-websites
 ## Pod docker image tag
 version: latest
-pullPolicy: Never
 
+namespace: zyte-test-websites
 domain: prod-01.gcp.infra.zyte.group
 
 ## Instance count
@@ -23,7 +23,7 @@ podAnnotations: {}
 env: {}
 
 ## Container run args
-websiteName: "jobs"
+websiteName: ""
 
 ## Restart policy for containers
 restartPolicy: Always
